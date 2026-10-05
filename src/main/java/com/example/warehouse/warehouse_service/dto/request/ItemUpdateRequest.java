@@ -1,5 +1,6 @@
 package com.example.warehouse.warehouse_service.dto.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -14,21 +15,28 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Request body untuk memperbarui data item")
 public class ItemUpdateRequest {
 
     @NotBlank(message = "SKU cannot be blank")
+    @Schema(description = "Kode unik SKU item", example = "ITEM-001")
     private String sku;
 
     @NotBlank(message = "Name cannot be blank")
+    @Schema(description = "Nama item", example = "Wireless Mechanical Keyboard Pro")
     private String name;
 
+    @Schema(description = "Deskripsi item", example = "Keyboard mechanical wireless 75% dengan RGB dan hot-swappable switches")
     private String description;
 
     @NotNull(message = "Price cannot be null")
     @PositiveOrZero(message = "Price must be greater than or equal to 0")
+    @Schema(description = "Harga satuan item", example = "380000.00")
     private BigDecimal price;
 
     @NotNull(message = "Stock quantity cannot be null")
     @PositiveOrZero(message = "Stock quantity must be greater than or equal to 0")
+    @Schema(description = "Jumlah stok item", example = "75")
     private Integer stockQuantity;
 }
+
