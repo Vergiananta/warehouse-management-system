@@ -7,20 +7,18 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemResponse {
+public class ItemVariantResponse {
     private Long id;
+    private Long itemId;
     private String sku;
     private String name;
-    private String description;
     private BigDecimal price;
     private Integer stockQuantity;
-    private List<ItemVariantResponse> variants;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

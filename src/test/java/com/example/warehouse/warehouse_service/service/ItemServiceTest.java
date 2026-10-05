@@ -7,6 +7,7 @@ import com.example.warehouse.warehouse_service.entity.Item;
 import com.example.warehouse.warehouse_service.exception.DuplicateResourceException;
 import com.example.warehouse.warehouse_service.exception.ResourceNotFoundException;
 import com.example.warehouse.warehouse_service.mapper.ItemMapper;
+import com.example.warehouse.warehouse_service.mapper.ItemVariantMapper;
 import com.example.warehouse.warehouse_service.repository.ItemRepository;
 import com.example.warehouse.warehouse_service.service.impl.ItemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,9 +36,11 @@ class ItemServiceTest {
     private ItemRepository itemRepository;
 
     @Spy
-    private ItemMapper itemMapper;
+    private ItemVariantMapper itemVariantMapper;
 
     @InjectMocks
+    private ItemMapper itemMapper;
+
     private ItemServiceImpl itemService;
 
     private Item item;
@@ -46,6 +49,8 @@ class ItemServiceTest {
 
     @BeforeEach
     void setUp() {
+        itemService = new ItemServiceImpl(itemRepository, itemMapper);
+
         item = Item.builder()
                 .id(1L)
                 .sku("SKU-001")
