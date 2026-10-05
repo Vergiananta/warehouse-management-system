@@ -4,6 +4,8 @@ import com.example.warehouse.warehouse_service.dto.request.OrderCreateRequest;
 import com.example.warehouse.warehouse_service.dto.response.ApiResponse;
 import com.example.warehouse.warehouse_service.dto.response.OrderResponse;
 import com.example.warehouse.warehouse_service.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,11 +22,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
+@Tag(name = "Orders", description = "Order management APIs")
 public class OrderController {
 
     private final OrderService orderService;
 
     @PostMapping
+    @Operation(summary = "Create a new order")
     public ResponseEntity<ApiResponse<OrderResponse>> createOrder(@Valid @RequestBody OrderCreateRequest request) {
         OrderResponse response = orderService.createOrder(request);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -32,12 +36,14 @@ public class OrderController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all orders")
     public ResponseEntity<ApiResponse<List<OrderResponse>>> getAllOrders() {
         List<OrderResponse> response = orderService.getAllOrders();
         return ResponseEntity.ok(ApiResponse.success("Orders retrieved successfully", response));
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get order by ID")
     public ResponseEntity<ApiResponse<OrderResponse>> getOrderById(@PathVariable Long id) {
         OrderResponse response = orderService.getOrderById(id);
         return ResponseEntity.ok(ApiResponse.success("Order retrieved successfully", response));

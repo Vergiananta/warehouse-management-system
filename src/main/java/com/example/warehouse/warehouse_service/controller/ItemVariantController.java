@@ -5,6 +5,8 @@ import com.example.warehouse.warehouse_service.dto.request.ItemVariantUpdateRequ
 import com.example.warehouse.warehouse_service.dto.response.ApiResponse;
 import com.example.warehouse.warehouse_service.dto.response.ItemVariantResponse;
 import com.example.warehouse.warehouse_service.service.ItemVariantService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,11 +25,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/items/{itemId}/variants")
 @RequiredArgsConstructor
+@Tag(name = "Item Variants", description = "Item variant management APIs")
 public class ItemVariantController {
 
     private final ItemVariantService itemVariantService;
 
     @PostMapping
+    @Operation(summary = "Create a new variant for an item")
     public ResponseEntity<ApiResponse<ItemVariantResponse>> createVariant(
             @PathVariable Long itemId,
             @Valid @RequestBody ItemVariantCreateRequest request) {
@@ -37,12 +41,14 @@ public class ItemVariantController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all variants of an item")
     public ResponseEntity<ApiResponse<List<ItemVariantResponse>>> getVariantsByItemId(@PathVariable Long itemId) {
         List<ItemVariantResponse> response = itemVariantService.getVariantsByItemId(itemId);
         return ResponseEntity.ok(ApiResponse.success("Variants retrieved successfully", response));
     }
 
     @GetMapping("/{variantId}")
+    @Operation(summary = "Get variant by ID")
     public ResponseEntity<ApiResponse<ItemVariantResponse>> getVariantById(
             @PathVariable Long itemId,
             @PathVariable Long variantId) {
@@ -51,6 +57,7 @@ public class ItemVariantController {
     }
 
     @PutMapping("/{variantId}")
+    @Operation(summary = "Update a variant by ID")
     public ResponseEntity<ApiResponse<ItemVariantResponse>> updateVariant(
             @PathVariable Long itemId,
             @PathVariable Long variantId,
@@ -60,6 +67,7 @@ public class ItemVariantController {
     }
 
     @DeleteMapping("/{variantId}")
+    @Operation(summary = "Delete a variant by ID")
     public ResponseEntity<ApiResponse<Void>> deleteVariant(
             @PathVariable Long itemId,
             @PathVariable Long variantId) {
